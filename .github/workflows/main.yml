@@ -45,7 +45,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/dae-boo/fastapi-server:latest
+          tags: ghcr.io/${{ github.actor }}/fastapi-server:latest
           platforms: linux/arm64
           
   deploy:
@@ -75,7 +75,7 @@ jobs:
             
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
-            docker pull ghcr.io/dae-boo/fastapi-server:latest
+            docker pull ghcr.io/${{ github.actor }}/fastapi-server:latest
             
             docker image prune -f
             docker logout
