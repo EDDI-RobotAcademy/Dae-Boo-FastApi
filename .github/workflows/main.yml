@@ -6,9 +6,9 @@ on:
       - main
       
 env:
-  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/fastapi-server
+  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/${{ secrets.Docker_Image }}
   VERSION: ${{ github.sha }}
-  NAME: fastapi-server
+  NAME: ${{ secrets.Docker_Image }}
   
 jobs:
   build:
@@ -45,7 +45,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.actor }}/fastapi-server:latest
+          tags: ghcr.io/${{ github.actor }}/${{ secrets.Docker_Image }}:latest
           platforms: linux/arm64
           
   deploy:
@@ -70,12 +70,12 @@ jobs:
           script: |
             pwd
             ls -al
-            cd fastapi/actions-runner
+            cd DaeBoo/python/actions-runner
             pwd
             
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
-            docker pull ghcr.io/${{ github.actor }}/fastapi-server:latest
+            docker pull ghcr.io/${{ github.actor }}/${{ secrets.Docker_Image }}:latest
             
             docker image prune -f
             docker logout
