@@ -6,7 +6,7 @@ on:
       - main
       
 env:
-  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/${{ secrets.Docker_Image }}
+  DOCKER_IMAGE: ghcr.io/${{ secrets.Actor }}/${{ secrets.Docker_Image }}
   VERSION: ${{ github.sha }}
   NAME: ${{ secrets.Docker_Image }}
   
@@ -36,7 +36,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ secrets.Actor }}
           password: ${{ secrets.GHCR_TOKEN }}
           
       - name: Build and push Docker image
@@ -45,7 +45,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.actor }}/${{ secrets.Docker_Image }}:latest
+          tags: ghcr.io/${{ secrets.Actor }}/${{ secrets.Docker_Image }}:latest
           platforms: linux/arm64
           
   deploy:
@@ -57,7 +57,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ secrets.Actor }}
           password: ${{ secrets.GHCR_TOKEN }}
           
       - name: Deploy to prod
@@ -73,9 +73,9 @@ jobs:
             cd DaeBoo/python/actions-runner
             pwd
             
-            echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.Actor }} --password-stdin
             
-            docker pull ghcr.io/${{ github.actor }}/${{ secrets.Docker_Image }}:latest
+            docker pull ghcr.io/${{ secrets.Actor }}/${{ secrets.Docker_Image }}:latest
             
             docker image prune -f
             docker logout
