@@ -1,4 +1,4 @@
-FROM arm64v8/python:3.8
+FROM arm64v8/python:3.9
 
 COPY ./app /app
 COPY requirements.txt /app
