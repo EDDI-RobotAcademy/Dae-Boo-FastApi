@@ -9,4 +9,6 @@ def request_age_recommend():
     # age_card_numbers = [random.randrange(1, 300) for _ in range(5)]
     age_card_numbers.append(1)
     age_card_numbers.append(2)
+    age_card_numbers.append(3)
+
     return age_card_numbers
